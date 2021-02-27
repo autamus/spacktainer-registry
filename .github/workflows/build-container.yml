@@ -17,10 +17,19 @@ jobs:
       - name: Generate spack package Dockerfile
         run: |
            export PATH=/opt/spack/bin:$PATH
-           echo $GITHUB_BRANCH
+           # TODO how do we get package from pull request that needs update?
+           branch=$(echo ${GITHUB_REF##*/})
+           echo $branch
+           package=$(echo "${branch/update-/}")
+           package=hdf5
+           echo "spack:" > spack.yaml
+           echo "  specs: [\"$package\"]" >> spack.yaml
+           echo "  view: true" >> spack.yaml
+
+           cat spack.yaml
            # package=$(echo "${GITHUB_BRANCH/update-/}")
-           spack containerize hdf5
-           spack containerize hdf5 > "${GITHUB_WORKSPACE}/Dockerfile.hdf5"
+           spack containerize
+           spack containerize > "${GITHUB_WORKSPACE}/Dockerfile.hdf5"
            
   build-container:
     needs: spack-containerize
