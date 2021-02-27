@@ -37,13 +37,33 @@ folder for an overview.
 
 ### Binoc GitHub Action
 
-At this point, we'd want to be able to add a folder of packages, and 
-a GitHub Action (a workflow/*.yml file) to the repository, with an 
-instruction to check for package updates at some frequency. When an update is
-present, the binoc robot should open a pull request. The repo where
-the action.yml should be added is [here](https://github.com/autamus/binoc).
+We added a small folder of packages, with a root under [spack](spack),
+the idea being that we might have other package managers here in a different namespace.
+That looks like this:
 
-**under development!** @vsoch will test when the GitHub action is ready.
+```bash
+$ tree spack/
+spack/
+├── p
+│   ├── py-black
+│   │   └── package.py
+│   └── py-pylint
+│       └── package.py
+└── s
+    ├── singularity
+    │   ├── package.py
+    │   ├── singularity_v3.4.0_remove_root_check.patch
+    │   └── spack_perms_fix.sh.j2
+    └── sublime-text
+        └── package.py
+```
+
+We then added a GitHub workflow file to run binoc at  [.github/workflows/binoc.yml](.github/workflows/binoc.yml).
+To test it, we start with a pull request (and it will be run on a scheduled basis after that.
+When an update is present, the binoc robot should open a pull request. For early
+testing, I'm not using an actual GitHub user, and am providing information for the GitHub
+actions bot. I suspect if we want this PR to trigger testing, we will need an actual
+user credential.
 
 ### Tests
 

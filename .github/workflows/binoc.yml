@@ -1,0 +1,26 @@
+name: "Automatic Binoc Scan"
+
+on:
+  schedule:
+    - cron: '0 14 * * *'
+
+jobs:
+  auto-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Run Binoc Scan for Spack
+        uses: autamus/binoc@v0.0.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
+        with:
+          git_token: ${{ env.GITHUB_TOKEN }}
+          git_username: github-actiions
+          git_email: github-actions@users.noreply.github.com 
+          git_name: github-actions
+          # Location of the package instructions relative to your repository
+          repo_path: 'spack'
+          parsers_loaded: 'spack'
+          general_action: 'true'
