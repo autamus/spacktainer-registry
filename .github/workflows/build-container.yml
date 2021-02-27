@@ -18,9 +18,9 @@ jobs:
         run: |
            export PATH=/opt/spack/bin:$PATH
            # TODO how do we get package from pull request that needs update?
-           branch=$(echo ${GITHUB_REF##*/})
-           echo $branch
-           package=$(echo "${branch/update-/}")
+           # branch=$(echo ${GITHUB_REF##*/})
+           # echo $branch
+           #package=$(echo "${branch/update-/}")
            package=hdf5
            echo "spack:" > spack.yaml
            echo "  specs: [\"$package\"]" >> spack.yaml
