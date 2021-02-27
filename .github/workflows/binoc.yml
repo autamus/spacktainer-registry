@@ -1,7 +1,6 @@
 name: "Automatic Binoc Scan"
 
 on:
-  pull_request: []
   schedule:
     - cron: '0 14 * * *'
 
