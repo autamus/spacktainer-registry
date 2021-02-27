@@ -1,0 +1,28 @@
+name: "Build Containers on Update"
+
+on:
+  pull_request: []
+#    branches:
+#      - update-*
+      
+jobs:
+  spack-containerize:
+    runs-on: ubuntu-latest
+    container:
+      image: spack/github-actions
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2        
+      - name: Log the node version
+        run: |
+           # Try replacing 
+           package=$(echo "${GITHUB_BRANCH/update-/}")
+           spack containerize $package
+           spack containerize $package > "$GITHUB_WORKSPACE/Dockerfile.${package}"
+           
+  build-container:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look to see if we have file from container
+        run: |
+           ls $GITHUB_WORKSPACE
