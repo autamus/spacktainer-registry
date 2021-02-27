@@ -9,7 +9,7 @@ jobs:
   spack-containerize:
     runs-on: ubuntu-latest
     container:
-      image: spack/github-actions:centos6
+      image: spack/ubuntu-bionic
     steps:
       - name: Checkout
         uses: actions/checkout@v2        
