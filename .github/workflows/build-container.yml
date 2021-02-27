@@ -8,20 +8,24 @@ on:
 jobs:
   spack-containerize:
     runs-on: ubuntu-latest
+    container:
+      image: spack/ubuntu-bionic
+      options: ["--entrypoint", "/bin/bash"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2        
       - name: Generate spack package Dockerfile
-        uses: docker://spack/ubuntu-bionic
-        with:
-          entrypoint: /bin/bash
         run: |
            export PATH=/opt/spack/bin:$PATH
-           echo ${GITHUB_BRANCH}
+           echo $GITHUB_BRANCH
            # package=$(echo "${GITHUB_BRANCH/update-/}")
            spack containerize hdf5
-           spack containerize hdf5 > "${GITHUB_WORKSPACE}/Dockerfile.hdf5"          
-
+           spack containerize hdf5 > "${GITHUB_WORKSPACE}/Dockerfile.hdf5"
+           
+  build-container:
+    needs: spack-containerize
+    runs-on: ubuntu-latest
+    steps:
       - name: Look to see if we have file from container
         run: |
            ls $GITHUB_WORKSPACE
