@@ -13,12 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2        
-      - name: Log the node version
+      - name: Generate spack package Dockerfile
         run: |
-           # Try replacing 
-           package=$(echo "${GITHUB_BRANCH/update-/}")
-           spack containerize $package
-           spack containerize $package > "$GITHUB_WORKSPACE/Dockerfile.${package}"
+           echo $GITHUB_BRANCH
+           # package=$(echo "${GITHUB_BRANCH/update-/}")
+           spack containerize hdf5
+           spack containerize hdf5 > "${GITHUB_WORKSPACE}/Dockerfile.hdf5"
            
   build-container:
     needs: spack-containerize
