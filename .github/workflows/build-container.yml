@@ -19,7 +19,6 @@ jobs:
         run: |
            export PATH=/opt/spack/bin:$PATH
            # TODO how do we get package from pull request that needs update?
-           IFS=
            package=hdf5
            echo "spack:" > spack.yaml
            echo "  specs: [\"$package\"]" >> spack.yaml
@@ -45,4 +44,13 @@ jobs:
         run: |
            cat Dockerfile
            ls
-           docker build -t ghcr.io/autamus/spacktainer-registry/hdf5:latest .
+           docker build -t ghcr.io/autamus/spacktainer-registry/hdf5:latest .           
+
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.BINOC_GIT_USERNAME }}
+          password: ${{ secrets.BINOC_GIT_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: autaumus/spacktainer-registry/hdf5
+          tag_with_ref: true
