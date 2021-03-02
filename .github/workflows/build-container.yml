@@ -11,8 +11,6 @@ jobs:
     container:
       image: spack/ubuntu-bionic
       options: --entrypoint /bin/bash
-    outputs:
-      dockerfile: ${{ steps.dockerize.outputs.dockerfile }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2        
@@ -28,20 +26,23 @@ jobs:
            echo "  view: true" >> spack.yaml
 
            cat spack.yaml
-           # package=$(echo "${GITHUB_BRANCH/update-/}")
-           dockerfile=$(spack containerize)
-           echo "::set-output name=dockerfile::${dockerfile}"           
+           spack containerize > Dockerfile
 
+        uses: actions/upload-artifact@v2
+        with:
+          name: Dockerfile
+          path: Dockerfile
            
   build-container:
     needs: spack-containerize
     runs-on: ubuntu-latest
     steps:
+      - name: Download Dockerfile
+        uses: actions/download-artifact@v2
+        with:
+          name: Dockerfile
       - name: Build Dockerfile for package
         run: |
-           # Ensure newlines printed 
-           IFS=
-           echo ${{needs.spack-containerize.outputs.dockerfile}} > Dockerfile
            cat Dockerfile
            ls
            docker build -t ghcr.io/autamus/spacktainer-registry/hdf5:latest .
