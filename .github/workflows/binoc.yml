@@ -15,7 +15,6 @@ jobs:
         
       - name: Run Binoc Scan for Spack
         uses: autamus/binoc@v0.0.4
-        env: 
         with:
           git_token: ${{ secrets.BINOC_GIT_TOKEN }}
           git_username: ${{ secrets.BINOC_GIT_USERNAME }}
