@@ -16,8 +16,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
         with:
-          git_token: ${{ env.GITHUB_TOKEN }}
-          git_username: github-actiions
+          git_token: ${{ secrets.BINOC_GIT_TOKEN }}
+          git_username: ${{ secrets.BINOC_GIT_USERNAME }}
           git_email: github-actions@users.noreply.github.com 
           git_name: github-actions
           # Location of the package instructions relative to your repository

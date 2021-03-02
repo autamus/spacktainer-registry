@@ -11,16 +11,17 @@ jobs:
     container:
       image: spack/ubuntu-bionic
       options: --entrypoint /bin/bash
+    outputs:
+      dockerfile: ${{ steps.dockerize.outputs.dockerfile }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2        
       - name: Generate spack package Dockerfile
+        id: dockerize
         run: |
            export PATH=/opt/spack/bin:$PATH
            # TODO how do we get package from pull request that needs update?
-           # branch=$(echo ${GITHUB_REF##*/})
-           # echo $branch
-           #package=$(echo "${branch/update-/}")
+           IFS=
            package=hdf5
            echo "spack:" > spack.yaml
            echo "  specs: [\"$package\"]" >> spack.yaml
@@ -28,24 +29,19 @@ jobs:
 
            cat spack.yaml
            # package=$(echo "${GITHUB_BRANCH/update-/}")
-           spack containerize
-           spack containerize > Dockerfile
-           
-      - name: Save generated Dockerfile
-        uses: actions/upload-artifact@v2
-        with:
-          name: Dockerfile
-          path: Dockerfile
+           dockerfile=$(spack containerize)
+           echo "::set-output name=dockerfile::${dockerfile}"           
+
            
   build-container:
     needs: spack-containerize
     runs-on: ubuntu-latest
     steps:
-      - name: Download Dockerfile
-        uses: actions/download-artifact@v2
-        with:
-          name: Dockerfile
       - name: Build Dockerfile for package
         run: |
+           # Ensure newlines printed 
+           IFS=
+           echo ${{needs.spack-containerize.outputs.dockerfile}} > Dockerfile
+           cat Dockerfile
            ls
            docker build -t ghcr.io/autamus/spacktainer-registry/hdf5:latest .
