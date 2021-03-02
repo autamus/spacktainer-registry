@@ -45,15 +45,15 @@ jobs:
            cat Dockerfile
            ls
            # TODO: can use GITHUB_SHA to get tag with commit
-           docker build -t ghcr.io/autamus/spacktainer-registry/wget:latest .
+           docker build -t ghcr.io/autamus/wget:latest .
 
       - name: 
         uses: docker/login-action@v1 
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
 
       # TODO: add commit as tag?
       - name: Push to GitHub Packages
-        run: docker push ghcr.io/autamus/spacktainer-registry/wget:latest
+        run: docker push ghcr.io/autamus/wget:latest
