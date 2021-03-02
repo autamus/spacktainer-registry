@@ -15,7 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2        
       - name: Generate spack package Dockerfile
-        id: dockerize
         run: |
            export PATH=/opt/spack/bin:$PATH
            # TODO how do we get package from pull request that needs update?
@@ -27,6 +26,7 @@ jobs:
            cat spack.yaml
            spack containerize > Dockerfile
 
+      - name: Upload Dockerfile
         uses: actions/upload-artifact@v2
         with:
           name: Dockerfile
