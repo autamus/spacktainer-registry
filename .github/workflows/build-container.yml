@@ -13,13 +13,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
         
       - name: Run Build Config
         uses: autamus/buildconfig@v0.0.2
         with:
           parsers_loaded: spack
           packages_path: spack/
-          repository_path: /github/workspace/spacktainer-registry/
       
       - name: Save Package Output
         run: |
