@@ -14,14 +14,15 @@ jobs:
       image: ghcr.io/autamus/buildconfig
       options: --entrypoint /bin/bash
     env:
-      BC_REPOSITORY_PATH: /github/workspace/
+      BC_REPOSITORY_PATH: .
+      BC_PACKAGES_PATH: spack/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       
       - name: Run BuildConfig
         run: | 
-          ls -la
+          echo $PWD
 
 
   spack-containerize:
