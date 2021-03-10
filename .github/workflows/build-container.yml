@@ -53,8 +53,7 @@ jobs:
       - name: Generate Spack Environment Dockerfile
         run: |
           export PATH=/opt/spack/bin:$PATH
-          # TODO how do we get package from pull request that needs update?
-          package= ${{ needs.build-config.outputs.package }}
+          package=${{needs.build-config.outputs.package}}
           echo "spack:" > spack.yaml
           echo "  specs: [\"$package\"]" >> spack.yaml
           echo "  view: true" >> spack.yaml
