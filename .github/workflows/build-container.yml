@@ -10,20 +10,21 @@ on:
 jobs:
   build-config:
     runs-on: ubuntu-latest
-    env:
-      BC_PACKAGES_PATH: spack/
-    container:
-      image: ghcr.io/autamus/buildconfig
-      options: --entrypoint /bin/bash
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Run Build Config
+        uses: autamus/buildconfig@v0.0.1
+        with:
+          parsers_loaded: 'spack'
+          packages_path: 'spack/'
       
-      - name: Run BuildConfig
+      - name: List Files
         run: |
           ls -la
-          /app/buildconfig
-
+          cat package
+          cat version
 
   spack-containerize:
     runs-on: ubuntu-latest
