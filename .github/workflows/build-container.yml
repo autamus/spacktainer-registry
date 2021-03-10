@@ -17,8 +17,8 @@ jobs:
       - name: Run Build Config
         uses: autamus/buildconfig@v0.0.1
         with:
-          parsers_loaded: 'spack'
-          packages_path: 'spack/'
+          parsers_loaded: spack
+          packages_path: spack/
       
       - name: Save Package Output
         run: |
