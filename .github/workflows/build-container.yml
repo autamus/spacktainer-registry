@@ -17,7 +17,7 @@ jobs:
           fetch-depth: '0'
         
       - name: Run Build Config
-        uses: autamus/buildconfig@v0.0.2
+        uses: autamus/buildconfig@v0.0.1
         with:
           parsers_loaded: spack
           packages_path: spack/
@@ -42,7 +42,7 @@ jobs:
         run: |
           for file in spack/*/*; do
             if [ -d "$file" ]; then
-                cp -r "$file/" "/var/spack/repos/builtin/packages/"
+                cp -r "$file/" "/opt/spack/var/spack/repos/builtin/packages/"
             fi
           done
 
