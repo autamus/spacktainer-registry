@@ -15,13 +15,15 @@ jobs:
       options: --entrypoint /bin/bash
     env:
       BC_PACKAGES_PATH: spack/
+      BC_REPOSITORY_PATH: ../spacktainer-registry/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       
       - name: Run BuildConfig
-        run: | 
-          INPUT_REPOSITORY_PATH=$PWD /app/buildconfig
+        run: |
+          ls -la 
+          /app/buildconfig
 
 
   spack-containerize:
