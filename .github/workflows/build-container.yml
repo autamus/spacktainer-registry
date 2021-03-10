@@ -21,6 +21,7 @@ jobs:
       
       - name: Run BuildConfig
         run: |
+          ls -la
           /app/buildconfig
 
 
