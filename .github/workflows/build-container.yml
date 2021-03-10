@@ -13,6 +13,8 @@ jobs:
     container:
       image: ghcr.io/autamus/buildconfig
       options: --entrypoint /bin/bash
+    env:
+      - BC_REPOSITORY_PATH: /github/workspace/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,7 +22,7 @@ jobs:
       - name: Run BuildConfig
         run: | 
           /app/buildconfig
-          ls
+          ls /github/workspace/
 
 
   spack-containerize:
