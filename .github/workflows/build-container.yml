@@ -28,10 +28,12 @@ jobs:
       - name: Save Package Output
         id: save-output
         run: |
-          cat package
-          cat version
           echo "::set-output name=package::$(cat package)"
           echo "::set-output name=version::$(cat version)"
+
+      - name: Read Package Output
+        run: |
+          echo ${{steps.save-output.outputs.package}}
 
 
   spack-containerize:
