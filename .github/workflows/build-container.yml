@@ -20,11 +20,11 @@ jobs:
           parsers_loaded: 'spack'
           packages_path: 'spack/'
       
-      - name: List Files
+      - name: Save Package Output
         run: |
-          ls -la
-          cat package
-          cat version
+          echo "::set-output name=package::$(cat package)"
+          echo "::set-output name=version::$(cat version)"
+
 
   spack-containerize:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
         run: |
           export PATH=/opt/spack/bin:$PATH
           # TODO how do we get package from pull request that needs update?
-          package=wget
+          package= ${{ jobs.build-config.outputs.package }}
           echo "spack:" > spack.yaml
           echo "  specs: [\"$package\"]" >> spack.yaml
           echo "  view: true" >> spack.yaml
@@ -86,4 +86,4 @@ jobs:
 
       # TODO: add commit as tag?
       - name: Push to GitHub Packages
-        run: docker push ghcr.io/autamus/wget:latest
+        run: docker push ghcr.io/autamus/${{ jobs.build-config.outputs.package }}:latest
