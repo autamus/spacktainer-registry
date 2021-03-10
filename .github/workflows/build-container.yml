@@ -22,7 +22,7 @@ jobs:
       
       - name: Run BuildConfig
         run: | 
-          echo $PWD
+          /app/buildconfig
 
 
   spack-containerize:
