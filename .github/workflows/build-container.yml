@@ -68,7 +68,9 @@ jobs:
           path: Dockerfile
            
   build-container:
-    needs: spack-containerize
+    needs:
+      - spack-containerize
+      - build-config
     runs-on: ubuntu-latest
     steps:
       - name: Download Dockerfile
