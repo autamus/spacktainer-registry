@@ -10,6 +10,9 @@ on:
 jobs:
   build-config:
     runs-on: ubuntu-latest
+    outputs:
+      package: ${{ steps.save-output.outputs.package }}
+      version: ${{ steps.save-output.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,6 +26,7 @@ jobs:
           packages_path: spack/
       
       - name: Save Package Output
+        id: save-output
         run: |
           cat package
           cat version
