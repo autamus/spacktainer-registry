@@ -19,6 +19,7 @@ jobs:
         with:
           parsers_loaded: spack
           packages_path: spack/
+          repository_path: /github/workspace/
       
       - name: Save Package Output
         run: |
