@@ -18,7 +18,7 @@ jobs:
         uses: autamus/buildconfig@v0.0.1
         with:
           parsers_loaded: spack
-          packages_path: spack/
+          packages_path: spack
       
       - name: Save Package Output
         run: |
