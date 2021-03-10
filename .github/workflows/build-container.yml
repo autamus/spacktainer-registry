@@ -21,8 +21,7 @@ jobs:
       
       - name: Run BuildConfig
         run: | 
-          /app/buildconfig
-          ls /github/workspace/
+          ls -la
 
 
   spack-containerize:
