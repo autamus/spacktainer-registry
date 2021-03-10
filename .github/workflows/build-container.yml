@@ -38,8 +38,6 @@ jobs:
     container:
       image: spack/ubuntu-bionic
       options: --entrypoint /bin/bash
-    outputs:
-      dockerfile: ${{ steps.save-dockerfile.outputs.dockerfile }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -63,23 +61,22 @@ jobs:
           cat spack.yaml
           spack containerize > Dockerfile
 
-      - name: Save Dockerfile
-        id: save-dockerfile
-        run: |
-          echo "::set-output name=dockerfile::$(cat Dockerfile)"
+      - name: Upload Dockerfile
+        uses: actions/upload-artifact@v2
+        with:
+          name: Dockerfile
+          path: Dockerfile
            
   build-container:
     needs: spack-containerize
     runs-on: ubuntu-latest
     steps:
       - name: Download Dockerfile
-        run: |
-          echo ${{needs.spack-containerize.outputs.dockerfile}} > Dockerfile
-
+        uses: actions/download-artifact@v2
+        with:
+          name: Dockerfile
       - name: Build Dockerfile for package
         run: |
-           cat Dockerfile
-           ls
            docker build -t ghcr.io/autamus/${{needs.build-config.outputs.package}}:latest \
                         -t  ghcr.io/autamus/${{needs.build-config.outputs.package}}:${{needs.build-config.outputs.version}} .
 
