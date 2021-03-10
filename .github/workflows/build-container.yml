@@ -10,19 +10,17 @@ on:
 jobs:
   build-config:
     runs-on: ubuntu-latest
+    env:
+      BC_PACKAGES_PATH: spack/
     container:
       image: ghcr.io/autamus/buildconfig
       options: --entrypoint /bin/bash
-    env:
-      BC_PACKAGES_PATH: spack/
-      BC_REPOSITORY_PATH: ../spacktainer-registry/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       
       - name: Run BuildConfig
         run: |
-          ls -la 
           /app/buildconfig
 
 
