@@ -24,6 +24,8 @@ jobs:
       
       - name: Save Package Output
         run: |
+          cat package
+          cat version
           echo "::set-output name=package::$(cat package)"
           echo "::set-output name=version::$(cat version)"
 
