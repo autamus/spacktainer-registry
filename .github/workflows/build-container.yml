@@ -1,11 +1,11 @@
 name: "Build Containers on Update"
 
 on:
-  # pull_request: []
+  pull_request: []
   #  branches:
   #    - update-*
   push:
-    branches: add/container-find
+    branches: main
       
 jobs:
   build-config:
@@ -92,4 +92,6 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Push to GitHub Packages
+        # Don't push build on pull request
+        if: github.ref == 'refs/heads/main
         run: docker push ghcr.io/autamus/${{needs.build-config.outputs.package}}:latest
