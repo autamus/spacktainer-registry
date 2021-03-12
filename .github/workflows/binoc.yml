@@ -21,6 +21,5 @@ jobs:
           git_email: ${{ secrets.BINOC_GIT_EMAIL }}
           git_name: ${{ secrets.BINOC_GIT_NAME }}
           # Location of the package instructions relative to your repository
-          repo_path: 'spack'
           parsers_loaded: 'spack'
           general_action: 'true'
